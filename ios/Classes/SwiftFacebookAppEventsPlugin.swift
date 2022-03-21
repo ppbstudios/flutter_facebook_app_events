@@ -26,7 +26,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
             handleSetUserData(call, result: result)
             break
         case "clearUserID":
-            handleClearUserID(call, result: result)
+            handleUserID(call, result: result)
             break
         case "flush":
             handleFlush(call, result: result)

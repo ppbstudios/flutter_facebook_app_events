@@ -11,15 +11,3 @@ import Flutter
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
-
-func application(
-  _ application: UIApplication,
-  continue userActivity: NSUserActivity,
-  restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-) -> Bool {
-  ApplicationDelegate.shared.application(application, continue: userActivity)
-
-  // Rest of implementation...
-
-  return true
-}

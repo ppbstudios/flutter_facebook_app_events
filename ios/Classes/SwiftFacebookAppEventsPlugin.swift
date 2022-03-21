@@ -85,7 +85,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
-    private func handleClearUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    private func handleUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         AppEvents.shared.userID()
         result(nil)
     }
@@ -157,7 +157,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         let arguments = call.arguments as? [String: Any] ?? [String: Any]()
         let amount = arguments["amount"] as! Double
         let currency = arguments["currency"] as! String
-        let parameters = arguments["parameters"] as? [String: Any] ?? [String: Any]()
+        let parameters = arguments["parameters"] as? [AppEvents.ParameterName: Any] ?? [AppEvents.ParameterName: Any]()
         AppEvents.shared.logPurchase(amount, currency: currency, parameters: parameters)
 
         result(nil)

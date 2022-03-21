@@ -86,7 +86,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     }
 
     private func handleClearUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        AppEvents.shared.clearUserID()
+        AppEvents.shared.userID()
         result(nil)
     }
 
@@ -122,9 +122,9 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         let payload = arguments["payload"] as? [String: Any]
         if let action = arguments["action"] {
             let actionString = action as! String
-            AppEvents.shared.logPushNotificationOpen(payload!, action: actionString)
+            AppEvents.shared.logPushNotificationOpen(payload: payload!, action: actionString)
         } else {
-            AppEvents.shared.logPushNotificationOpen(payload!)
+            AppEvents.shared.logPushNotificationOpen(payload: payload!)
         }
 
         result(nil)

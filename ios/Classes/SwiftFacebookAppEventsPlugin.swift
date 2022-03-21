@@ -158,7 +158,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         let amount = arguments["amount"] as! Double
         let currency = arguments["currency"] as! String
         let parameters = arguments["parameters"] as? [AppEvents.ParameterName: Any] ?? [AppEvents.ParameterName: Any]()
-        AppEvents.shared.logPurchase(amount, currency: currency, parameters: parameters)
+        AppEvents.shared.logPurchase(amount: amount, currency: currency, parameters: parameters)
 
         result(nil)
     }

@@ -86,7 +86,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     }
 
     private func handleClearUserID(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        AppEvents.shared.userID()
+        AppEvents.shared.userID = nil
         result(nil)
     }
 

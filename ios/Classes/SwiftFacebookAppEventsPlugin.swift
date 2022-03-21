@@ -100,7 +100,7 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     }
 
     private func handleHandleGetAnonymousId(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        result(AppEvents.shared.shared.anonymousID)
+        result(AppEvents.shared.anonymousID)
     }
 
     private func handleLogEvent(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

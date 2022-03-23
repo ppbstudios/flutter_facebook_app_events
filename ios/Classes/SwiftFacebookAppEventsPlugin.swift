@@ -14,9 +14,9 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         // "Removal of Auto Initialization of SDK" section
         
         Settings.isAutoInitEnabled = true
-        // ApplicationDelegate.shared.initializeSDK(nil)
+        ApplicationDelegate.shared.initializeSDK()
         
-        ApplicationDelegate.shared.initialize()
+//         ApplicationDelegate.shared.initialize()
 
         registrar.addMethodCallDelegate(instance, channel: channel)
     }

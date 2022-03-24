@@ -1,3 +1,10 @@
+# Command 
+
+```
+cd ios
+pod install --repo-update
+```
+
 # facebook_app_events
 
 [![pub package](https://img.shields.io/pub/v/facebook_app_events.svg)](https://pub.dartlang.org/packages/facebook_app_events)

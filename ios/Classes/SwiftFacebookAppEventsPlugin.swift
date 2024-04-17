@@ -12,15 +12,29 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         // Required for FB SDK 9.0, as it does not initialize the SDK automatically any more.
         // See: https://developers.facebook.com/blog/post/2021/01/19/introducing-facebook-platform-sdk-version-9/
         // "Removal of Auto Initialization of SDK" section
-        
-        //Settings.shared.isAutoInitializationEnabled = true
-//         Settings.isAutoInitEnabled = true
         ApplicationDelegate.shared.initializeSDK()
-        
-        
-//         ApplicationDelegate.shared.initialize()
 
         registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.addApplicationDelegate(instance)
+    }
+    
+    /// Connect app delegate with SDK
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable : Any] = [:]) -> Bool {
+        var options = [UIApplication.LaunchOptionsKey: Any]()
+        for (k, value) in launchOptions {
+            let key = k as! UIApplication.LaunchOptionsKey
+            options[key] = value
+        }
+        ApplicationDelegate.shared.application(application,didFinishLaunchingWithOptions: options)
+        return true
+    }
+    
+    public func application( _ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
+        let processed = ApplicationDelegate.shared.application(
+            app, open: url,
+            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+            annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        return processed;
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -126,13 +140,11 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
     private func handlePushNotificationOpen(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments = call.arguments as? [String: Any] ?? [String: Any]()
         let payload = arguments["payload"] as? [String: Any]
-        if let action = arguments["action"] {
-            let actionString = action as! String
-            AppEvents.shared.logPushNotificationOpen(payload: payload!, action: actionString)
+        if let action = arguments["action"] as? String {
+            AppEvents.shared.logPushNotificationOpen(payload: payload!, action: action)
         } else {
             AppEvents.shared.logPushNotificationOpen(payload: payload!)
         }
-
         result(nil)
     }
 
@@ -173,7 +185,8 @@ public class SwiftFacebookAppEventsPlugin: NSObject, FlutterPlugin {
         let arguments = call.arguments as? [String: Any] ?? [String: Any]()
         let enabled = arguments["enabled"] as! Bool
         let collectId = arguments["collectId"] as! Bool
-        Settings.shared.isAdvertiserTrackingEnabled = true
+        FBAdSettings.setAdvertiserTrackingEnabled(enabled)
+        Settings.shared.isAdvertiserTrackingEnabled = enabled
         Settings.shared.isAdvertiserIDCollectionEnabled = collectId
         result(nil)
     }
